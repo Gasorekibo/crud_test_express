@@ -40,3 +40,19 @@ export const getOneProduct = async (req, res) => {
   }
 };
 
+export const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      { ...req.body },
+      { new: true }
+    );
+    if (!updatedProduct) return res.status(404).json('Product not found');
+    return res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
