@@ -29,3 +29,14 @@ export const addProduct = async (req, res) => {
   }
 };
 
+export const getOneProduct = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const isProductExists = await Product.findById(id);
+    if (!isProductExists) return res.status(404).json('Product not found');
+    return res.status(200).json(isProductExists);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
